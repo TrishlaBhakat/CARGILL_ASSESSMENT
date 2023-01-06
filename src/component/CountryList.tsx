@@ -32,13 +32,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    padding: theme.spacing(2),
     width: '45%'
   },
   paperDetails: {
-    padding: theme.spacing(2),
     width: '45%',
-    height: 'max-content',
+    maxHeight: '30rem',
   },
   buttonSpace: {
     marginLeft: '10%'
@@ -47,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: 'auto',
     maxWidth: "50rem",
-
+  },
+  detailsWrapper: {
+    padding: '1rem'
   }
 }));
 
@@ -128,7 +128,7 @@ export default function CountryList() {
                 {filteredData && filteredData.map((row) => (
                   <TableRow key={row['name']}>
                     {columns.map((col) => (
-                      <TableCell align="left"  style={{cursor: 'pointer' }} onClick={e => { setCountryDetails(row) }}>{row[col.field]}</TableCell>
+                      <TableCell align="left" style={{ cursor: 'pointer' }} onClick={e => { setCountryDetails(row) }}>{row[col.field]}</TableCell>
                     ))}
 
                   </TableRow>
@@ -141,13 +141,10 @@ export default function CountryList() {
         </div>
       </Paper>
       <Paper elevation={2} className={classes.paperDetails}>
-        <Grid item>
-          {_.isEmpty(selectedCountryDetails) &&
-            <Typography>Please select country to view the details......</Typography>
-          }
-
-        </Grid>
-        <Grid item>
+        {_.isEmpty(selectedCountryDetails) && <Grid item className={classes.detailsWrapper}>
+          <Typography>Please select country to view the details......</Typography>
+        </Grid>}
+        <Grid item className={classes.detailsWrapper}>
           {!_.isEmpty(selectedCountryDetails) &&
             (<><Typography>Capital : {selectedCountryDetails?.capital}</Typography>
               <Typography>Region : {selectedCountryDetails?.region}</Typography>
